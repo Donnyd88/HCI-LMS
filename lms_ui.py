@@ -13,6 +13,7 @@ Then http://localhost:8080 will open automatically.
 """
 
 import requests
+import dashboard
 from nicegui import ui
 
 API_BASE = "http://localhost:8001"
@@ -36,6 +37,7 @@ def main_page():
 
     with ui.row().classes("w-full no-wrap"):
         with ui.column().classes("w-1/5 p-2"):
+            ui.link("Dashboard", "/dashboard")
             ui.label("Courses").classes("text-lg")
             for c in courses:
                 ui.link(c["code"], "#").on(
