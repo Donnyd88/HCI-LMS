@@ -30,7 +30,9 @@ def api_get(path: str):
         return []
 
 @ui.page("/")
-def main_page():
+def main_page(course: int = None):  
+    if course is not None:
+        state["course_id"] = course
     courses = api_get("/courses")
     if courses and state["course_id"] is None:
         state["course_id"] = courses[0]["id"]
