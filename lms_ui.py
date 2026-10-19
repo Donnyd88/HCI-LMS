@@ -169,11 +169,7 @@ def render_main_content():
         ui.label("No course selected")
         return
 
-    course = api_get(f"/courses/{course_id}")
-    ui.label(f"{course.get('code', '')} - {course.get('name', '')}").classes("text-2xl")
-    ui.label(f"{course.get('instructor', '')} | {course.get('term', '')}").classes(
-        "text-2xl"
-    )
+
 
     with ui.tabs().classes("w-full") as tabs:
         assignments_tab = ui.tab("Assignments")
@@ -192,6 +188,7 @@ def render_main_content():
             render_settings()
 
 
+
 def render_assignments(course_id: int):
     course = api_get(f"/courses/{course_id}")
     ui.label(f'{course.get("code", "")} - {course.get("name", "")}').classes("titles")
@@ -204,6 +201,7 @@ def render_assignments(course_id: int):
             label += " (submitted)"
         ui.label(label)
     ui.update()
+
 
 
 def render_announcements(course_id: int):
