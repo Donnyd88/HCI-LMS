@@ -19,6 +19,8 @@ API_BASE = "http://localhost:8001"
 
 state = {"course_id": None}
 
+notif_state = True
+
 def api_get(path: str):
     try:
         resp = requests.get(f"{API_BASE}{path}", timeout=5)
@@ -81,12 +83,25 @@ def render_assignments(course_id: int):
             label += " (submitted)"
         ui.label(label)
 
+        async def pick_file():
+            result = "file explorer"  # replace with implementation of file explorer open
+            ui.notify(f'Opened: {result}')
+
+        ui.button('Upload Submission', on_click=pick_file)
+
 def render_announcements(course_id: int):
     announcements = api_get(f"/courses/{course_id}/announcements")
     for ann in announcements:
         ui.label(ann["title"])
         ui.label(ann["body"])
         ui.separator()
+
+    def toggle_notifs():
+        global notif_state
+        notif_state = not notif_state
+        notif_button.props(f'color={"green" if notif_state else "red"}')
+
+    notif_button = ui.button('Toggle Notifications', on_click=toggle_notifs)
 
 def render_grades(course_id: int):
     grades = api_get(f"/courses/{course_id}/grades")
